@@ -1,6 +1,6 @@
+
 # Cygoについて
-AlphaGo Fan論文を参考に構築した囲碁AIです．AlphaGo Fanはプロを圧倒する棋力を示しましたが，
-ハードウェアに依存しており，ソースも公開されていません．
+AlphaGo Fanの論文を参考に作った囲碁AIです．AlphaGo Fanはプロを圧倒する棋力を示しましたが，ハードウェアに依存しており，ソースも公開されていません．
 しかし，Cygoは少資源環境下で動作する囲碁AIを目指しました．探索アルゴリズムに幾つかの工夫を施しています．
 
 １９路盤にのみ対応しており，同じプレイアウト数のときでは強豪のオープンソース囲碁プログラムであるRay， Fuego，Pachiよりも強いです．
@@ -17,10 +17,14 @@ MacOSとUbuntu上で動作することを確認しています．おそらくWin
 - 次のコマンドで依存しているライブラリをインストール．<br>
 `$ pip install -r requirements.txt`
 
+# コンパイル
+Rayのラッパークラスや木構造の部分にCythonを使っているためコンパイルに下記のコマンドを実行します．Rollout policyをCythonで書いてみたのですが、高速動作を実現できなかったため代わりにRayのプレイアウトを使わせてもらってます．<br>
+`python setup.py build_ext -i`
+
 # ネットワークの学習
 `train_sl_policy.py, train_rl_policy.py, train_value_net.py`の３つのファイルに設定を記述して実行すると．
 重みや，モデルなどのデータが`data/*`に作成されていきます．ディレクトリに関する設定は`config.py`から変更可能です．
-各設定の詳細に関してはソースコードのコメントを読んで下さい．まだ書いてませんが汗
+各設定の詳細に関してはソースのコメントに書く予定です．まだ書いてませんが汗
 
 例）`python train_sl_policy_net.py`
 
@@ -29,10 +33,6 @@ MacOSとUbuntu上で動作することを確認しています．おそらくWin
 |SL policy network|熟練者の着手予測|
 |RL policy network|Value networkの訓練データの生成|
 |Value network|盤面の評価|
-
-# コンパイル
-RayのラッパークラスなどCythonファイルをコンパイルする為に下記のコマンドを実行します．<br>
-`python setup.py build_ext -i`
 
 # 実行
 - `apvmcts/gpu_workers.py`の`SL_POLICY_NET_WEIGHT, VALUE_NET_WEIGHT`を使用したい重みのファイル名にする．
