@@ -10,9 +10,6 @@ AlphaGo Fan論文を参考に構築した囲碁AIです．AlphaGo Fanはプロ�
 MacOSとUbuntu上で動作することを確認しています．おそらくWindows上でも動作するとは思いますが，動作確認はしてません．
 ライセンスはGPLライセンスで，インターフェースは同梱していません．GoGuiなどのソフトを使って下さい．
 
-# ダウンロード
-[ソースコード（Github）](https://github.com/syarig/Cygo)
-
 
 # 環境構築
 - [Keras](https://keras.io/ja/)を[TensorFlow](https://www.tensorflow.org/)バックエンドでインストール．
