@@ -10,7 +10,8 @@ from config import (
     value_model, value_weight
 )
 
-
+SL_POLICY_NET_WEIGHT = "weights.00001.hdf5"
+VALUE_NET_WEIGHT = "weights.00001.hdf5"
 
 class ApvWorker(mp.Process):
     def __init__(self, apv_tree: Tree, pvque: mp.JoinableQueue,
@@ -32,9 +33,9 @@ class ApvWorker(mp.Process):
 
     def run(self):
         policy = CNNPolicy.load_model(slpolicy_model)
-        policy.model.load_weights(os.path.join(slpolicy_weight, "weights.00001.hdf5"))
+        policy.model.load_weights(os.path.join(slpolicy_weight, SL_POLICY_NET_WEIGHT))
         value = CNNValue.load_model(value_model)
-        value.model.load_weights(os.path.join(value_weight, "weights.00003.hdf5"))
+        value.model.load_weights(os.path.join(value_weight, VALUE_NET_WEIGHT))
 
         while True:
             if self._rtque.empty():
@@ -81,7 +82,7 @@ class PolicyWorker(mp.Process):
 
 
         policy = CNNPolicy.load_model(slpolicy_model)
-        policy.model.load_weights(os.path.join(slpolicy_weight, "weights.00001.hdf5"))
+        policy.model.load_weights(os.path.join(slpolicy_weight, SL_POLICY_NET_WEIGHT))
 
         while True:
             k = self._queue.get()
@@ -117,7 +118,7 @@ class ValueWorker(mp.Process):
 
 
         value = CNNValue.load_model(value_model)
-        value.model.load_weights(os.path.join(value_weight, "weights.00003.hdf5"))
+        value.model.load_weights(os.path.join(value_weight, VALUE_NET_WEIGHT))
 
         while True:
             try:
