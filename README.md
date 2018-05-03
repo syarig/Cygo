@@ -40,7 +40,9 @@ Rollout policyをCythonで書いてみたのですが、高速動作を実現で
 # 実行
 - `apvmcts/gpu_workers.py`の`SL_POLICY_NET_WEIGHT, VALUE_NET_WEIGHT`を使用したい重みのファイル名にする．
 - `python cygo.py`を実行する．下記のような引数を取ることができます．
-- PCのスペックに合わせて`--rollout`と`--tree-size`は調節して下さい．
+- PCのスペックに合わせて`--rollout`と`--tree-size`は調節して下さい．
+
+例）`python cygo.py -t 1000 -r 1000 --logging --verbose`
 
 ```
 usage: cygo.py [-h] [--processes PROCESSES] [--lambda_val LAMBDA_VAL]

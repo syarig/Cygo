@@ -48,7 +48,7 @@ if __name__ == "__main__":
                         help=f"Go board size. Default: {BOARD_SIZE}")
     parser.add_argument("--reuse-subtree", "-R", default=False, action="store_true",
                         help=f"Number of search moves for each nodes. Default: {N_MOVES}")
-    parser.add_argument("--logging", "-g", default=False, action="store_true", help="debug mode")
+    parser.add_argument("--logging", "-g", default=False, action="store_true", help="logging")
     parser.add_argument("--verbose", "-v", default=False, action="store_true", help="debug mode")
 
     args = parser.parse_args()
