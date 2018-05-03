@@ -16,7 +16,6 @@ from config import project_root, ray_dir, log_dir
 sys.path.append(project_root)
 
 
-DEBUG = True
 WIN_THR = 0.6
 LOSE_THR = 0.2
 RESIGN_CNT_THR = 3
@@ -46,6 +45,8 @@ class Cygo(GtpPlayer):
         self.expand_thr = cargs.expand_thr
         self.using_hash = cargs.reuse_subtree
         self.processes = cargs.processes
+        self.verbose = cargs.verbose
+        self.logging = cargs.logging
         self.state = go.GameState(cargs.size, cargs.komi, enforce_superko=True)
 
         self.moves_max = cargs.size ** 2 + 1
@@ -83,7 +84,7 @@ class Cygo(GtpPlayer):
         self.state = go.GameState(self.state.size, enforce_superko=True)
         self.apv_tree.clear()
         self.ray.gtp_clearboard()
-        if len(self.q_ary) != 0 and len(self.r_ary) != 0:
+        if self.logging and len(self.q_ary) != 0 and len(self.r_ary) != 0:
             self.save_graph(Q=self.q_ary, R=self.r_ary)
 
 
@@ -198,7 +199,7 @@ class Cygo(GtpPlayer):
                 self.w_resign_cnt = 0
                 return gtp.RESIGN
 
-        if DEBUG:
+        if self.verbose:
             self.state.print_board()
             elapsed_time = time.time() - start
             print("Evaluation: {:.8}\nQ: {:.8}, R: {:.8}\nelapsed time: {}".format(

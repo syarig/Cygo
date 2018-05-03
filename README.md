@@ -18,13 +18,16 @@ MacOSとUbuntu上で動作することを確認しています．おそらくWin
 `$ pip install -r requirements.txt`
 
 # コンパイル
-Rayのラッパークラスや木構造の部分にCythonを使っているためコンパイルに下記のコマンドを実行します．Rollout policyをCythonで書いてみたのですが、高速動作を実現できなかったため代わりにRayのプレイアウトを使わせてもらってます．<br>
+Rayのラッパークラスや木構造の部分にCythonを使っているためコンパイルに下記のコマンドを実行します．`g++-6`でコンパイルするようになっています．環境に合わせて`setup.py`を変更して下さい．
+
 `python setup.py build_ext -i`
+
+Rollout policyをCythonで書いてみたのですが、高速動作を実現できなかったため代わりにRayのプレイアウトを使わせてもらってます．
 
 # ネットワークの学習
 `train_sl_policy.py, train_rl_policy.py, train_value_net.py`の３つのファイルに設定を記述して実行すると．
 重みや，モデルなどのデータが`data/*`に作成されていきます．ディレクトリに関する設定は`config.py`から変更可能です．
-各設定の詳細に関してはソースのコメントに書く予定です．まだ書いてませんが汗
+各設定の詳細に関してはソースのコメントに書く予定です．
 
 例）`python train_sl_policy_net.py`
 
@@ -37,6 +40,7 @@ Rayのラッパークラスや木構造の部分にCythonを使っているた�
 # 実行
 - `apvmcts/gpu_workers.py`の`SL_POLICY_NET_WEIGHT, VALUE_NET_WEIGHT`を使用したい重みのファイル名にする．
 - `python cygo.py`を実行する．下記のような引数を取ることができます．
+- PCのスペックに合わせて`--rollout`と`--tree-size`は調節して下さい．
 
 ```
 usage: cygo.py [-h] [--processes PROCESSES] [--lambda_val LAMBDA_VAL]

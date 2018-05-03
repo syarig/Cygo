@@ -1,8 +1,8 @@
-.idea/
+!.gitkeep
+.idea
 build/
 data/kgs/*
 data/models/*
 data/planes/*
 data/selfplay/*
 data/weights/*
-!.gitkeep
