@@ -1,5 +1,7 @@
 
 # Cygoについて
+https://github.com/syarig/Cygo
+
 AlphaGo Fanの論文を参考に作った囲碁AIです．AlphaGo Fanはプロを圧倒する棋力を示しましたが，ハードウェアに依存しており，ソースも公開されていません．
 しかし，Cygoは少資源環境下で動作する囲碁AIを目指しました．探索アルゴリズムに幾つかの工夫を施しています．
 
@@ -71,3 +73,35 @@ optional arguments:
   --reuse-subtree, -R   Number of search moves for each nodes. Default: 20
   --verbose, -v         debug mode
 ```
+
+# 対戦させてみる
+GoGuiとTwoGtpを使って対戦させるシェルスクリプトはこんな感じ
+パスやコマンド諸々はご自身の環境に合わして対戦させてみてください
+
+```shell
+#!/usr/bin/env bash
+twogtp_cmd="gogui-twogtpのパス"
+gogui_cmd="goguiのパス"
+python_path="python環境へのパス"
+
+ray="ray --no-debug --playout 6000"
+pachi="pachi -d 0 -t =6000"
+gnugo19="gnugo --mode gtp --level 15"
+cygo="${python_path} cygo.pyへのパス"
+
+
+BLACK=$ray
+WHITE=$cygo
+
+DIR="対戦結果の保存先"
+FILE="対戦結果のファイル名"
+
+TWOGTP="$twogtp_cmd \
+  -black \"$BLACK\" -white \"$WHITE\" -games 50 \
+  -size 19 -verbose -referee \"$gnugo\" -sgffile $DIR$FILE"
+
+$gogui_cmd -size 19 -program "$TWOGTP" -computer-both -auto
+
+$twogtp_cmd -analyze "${DIR}${FILE}.dat"
+```
+
