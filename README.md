@@ -14,24 +14,32 @@ MacOSとUbuntu上で動作することを確認しています．おそらくWin
 
 
 # 環境構築
-- [Keras](https://keras.io/ja/)を[TensorFlow](https://www.tensorflow.org/)バックエンドでインストール．
-- `$ cd Cygo`で作業ディレクトリに移動
-- 次のコマンドで依存しているライブラリをインストール．<br>
-`$ pip install -r requirements.txt`
+- 事前に`pipenv`を入れておいてください
+- GPUを使うにはGPU版のtensorfowをインストールしてください
+```shell
+# Cygoをクローンしてくる
+git clone https://github.com/syarig/Cygo.git
+cd Cygo
+
+# 必要なライブラリをインストール
+pipenv install
+```
 
 # コンパイル
-Rayのラッパークラスや木構造の部分にCythonを使っているためコンパイルに下記のコマンドを実行します．`g++-6`でコンパイルするようになっています．環境に合わせて`setup.py`を変更して下さい．
-
-`python setup.py build_ext -i`
-
 Rollout policyをCythonで書いてみたのですが、高速動作を実現できなかったため代わりにRayのプレイアウトを使わせてもらってます．
+Rayのラッパークラスや木構造の部分にCythonを使っているためコンパイルに下記のコマンドを実行します。`g++5`以上をインストールしておいてください。
+
+```shell
+$ python setup.py build_ext -i
+```
+
 
 # ネットワークの学習
-`train_sl_policy.py, train_rl_policy.py, train_value_net.py`の３つのファイルに設定を記述して実行すると．
-重みや，モデルなどのデータが`data/*`に作成されていきます．ディレクトリに関する設定は`config.py`から変更可能です．
-各設定の詳細に関してはソースのコメントに書く予定です．
+`train_sl_policy_net.py, train_rl_policy_net.py, train_value_net.py`のファイルを実行することでモデルを作成することができます。バッチ数等のパラメータもこのファイルに書いてあります。重みなど各種データは`data/*`に作成されます．ディレクトリに関する設定は`config.py`から変更してください。．
 
-例）`python train_sl_policy_net.py`
+```shell
+python train_sl_policy_net.py
+```
 
 |名称|用途|
 ---|---
@@ -75,8 +83,8 @@ optional arguments:
 ```
 
 # 対戦させてみる
-GoGuiとTwoGtpを使って対戦させるシェルスクリプトはこんな感じ
-パスやコマンド諸々はご自身の環境に合わして対戦させてみてください
+このようにするとGoGuiとTwoGtpを使って対戦させることがでます。
+パスやコマンド諸々はご自身の環境に合わして実行してください
 
 ```shell
 #!/usr/bin/env bash
