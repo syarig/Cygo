@@ -3,8 +3,8 @@ from Cython.Build import cythonize
 from setuptools import setup, Extension
 import numpy as np
 
-os.environ["CC"] = "g++-6"
-os.environ["CXX"] = "g++-6"
+os.environ["CC"] = "g++"
+os.environ["CXX"] = "g++"
 
 ray_src = [
     "ray/wrapper.pyx",

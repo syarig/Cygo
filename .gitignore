@@ -1,8 +1,10 @@
+.vscode
+.DS_Store
 !.gitkeep
 .idea
 build/
-data/kgs/*
-data/models/*
-data/planes/*
-data/selfplay/*
-data/weights/*
+/data/*
+
+*.c
+*.cpp
+*.so
